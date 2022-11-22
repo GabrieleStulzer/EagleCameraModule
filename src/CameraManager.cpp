@@ -19,12 +19,12 @@ CameraManager::CameraManager() {
 
 int CameraManager::startLogging(std::filesystem::path directory, rs2::frame *frames) try
 {
-    rs2::colorizer color_map;
     int counter = 0;
 
     auto callback = [&](const rs2::frame& frame)
     {
-        std::lock_guard<std::mutex> lock(mutex);
+        // std::lock_guard<std::mutex> lock(mutex);
+        rs2::colorizer color_map;
 
         if (rs2::frameset fs = frame.as<rs2::frameset>())
         {
@@ -48,10 +48,10 @@ int CameraManager::startLogging(std::filesystem::path directory, rs2::frame *fra
 
                     std::stringstream filepath;
                     filepath << directory.string();
-                    filepath << "image-" << vf.get_profile().stream_name() << ".png";
+                    filepath << "image-" << vf.get_profile().stream_name() << "-" << counter << ".png";
 
                     cv::imwrite(filepath.str(), image);
-                }
+                }   
 
             }
         }
