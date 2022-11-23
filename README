@@ -1,0 +1,10 @@
+
+
+## Installation Problems
+When developing the code on the Jetson the camera logging works only executing the program with sudo privileges. Otherwise the execution fails with Segmentation Fault.
+In order to avoid this behaviour run the following commands:
+- update usb port privilegies:
+    sudo chmod -R 777 /dev/bus/usb/
+
+- when executing the command realsense-viewer in order to run the realsense user interface we noticed on the top right corner a pop up which indicated to update libusb realsense rules. To do it run the following command:
+sudo cp ~/.99-realsense-libusb.rules /etc/udev/rules.d/99-realsense-libusb.rules && sudo udevadm control --reload-rules && udevadm trigger

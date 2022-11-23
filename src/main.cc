@@ -4,6 +4,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <unistd.h>
 
 #include "../include/CameraManager.h"
 
@@ -17,7 +18,7 @@ int main() {
 
     while(true) {
         std::cout << "Logging Images" << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(3));
+        usleep(10000000);
     }
 
     return 0;

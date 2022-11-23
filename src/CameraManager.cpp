@@ -21,6 +21,11 @@ int CameraManager::startLogging(std::filesystem::path directory, rs2::frame *fra
 {
     int counter = 0;
 
+    rs2::config cfg;
+
+    cfg.enable_stream(RS2_STREAM_COLOR, 1280, 720, RS2_FORMAT_BGR8,30);
+    cfg.enable_stream(RS2_STREAM_DEPTH, 1280, 720, RS2_FORMAT_Z16, 30);
+
     auto callback = [&](const rs2::frame& frame)
     {
         // std::lock_guard<std::mutex> lock(mutex);
@@ -28,7 +33,7 @@ int CameraManager::startLogging(std::filesystem::path directory, rs2::frame *fra
 
         if (rs2::frameset fs = frame.as<rs2::frameset>())
         {
-            std::cout << "Video Frame Received" << std::endl;
+            std::cout << counter << "- Video Frame Received" << std::endl;
 
             for(auto&& frame: fs) {
                 if(auto vf = frame.as<rs2::video_frame>()) {
